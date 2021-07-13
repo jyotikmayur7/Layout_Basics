@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">LayoutBasics</string>
+    <string name="login">LOGIN</string>
+    <string name="register">REGISTER</string>
+    <string name="reset">RESET</string>
+    <string name="sign_in">Sign In</string>
+    <string name="scheduled">SCHEDULED</string>
+    <string name="flight_departing_in_5_days">FLIGHT DEPARTING IN 5 DAYS</string>
+    <string name="pnr_ky9_432776">PNR: KY9/432776</string>
+    <string name="first_name">FIRST NAME</string>
+    <string name="last_name">LAST NAME</string>
+    <string name="age">AGE</string>
+    <string name="flight_duration">FLIGHT DURATION</string>
+</resources>
