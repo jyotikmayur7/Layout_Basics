@@ -3,8 +3,10 @@ package com.example.layoutbasics
 import android.content.res.Resources
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
+import kotlinx.android.synthetic.main.dynamic_layout.*
 
 const val margin: Int = 16
 
@@ -50,11 +52,22 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupTextQuestion(counter: Int, q: Question){}
+    private fun setupTextQuestion(counter: Int, q: Question){
+        val textView = getQuestionTextView(counter, q.qText)
+
+        val editText = EditText(this)
+        editText.setSingleLine(true)
+        editText.layoutParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        )
+        quiz_container.addView(textView)
+        quiz_container.addView(editText)
+    }
 
     private fun setupRadioQuestion(counter: Int, q:Question){}
-    private fun setupCheckBoxQuestion(counter: Int, q:Question){}
 
+    private fun setupCheckBoxQuestion(counter: Int, q:Question){}
 
     private fun getQuestionTextView(counter: Int, question: String): TextView{
         val textView = TextView(this)
