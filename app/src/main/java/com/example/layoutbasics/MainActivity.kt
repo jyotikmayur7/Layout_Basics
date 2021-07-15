@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.Gravity
 import android.widget.*
 import kotlinx.android.synthetic.main.dynamic_layout.*
+import java.util.*
 
 const val margin: Int = 16
 
@@ -56,6 +57,7 @@ class MainActivity : AppCompatActivity() {
 
         val editText = EditText(this)
         editText.setSingleLine(true)
+        editText.id = q.id
         editText.layoutParams = LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.MATCH_PARENT,
             LinearLayout.LayoutParams.WRAP_CONTENT
@@ -107,7 +109,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun getQuestionTextView(counter: Int, question: String): TextView{
         val textView = TextView(this)
-        textView.text = "Q{counter}. {question}"
+        textView.text = "Q${counter+1}. $question"
 
         // For the TextView we are setting these layout parameters
         textView.layoutParams = LinearLayout.LayoutParams(
@@ -135,6 +137,57 @@ class MainActivity : AppCompatActivity() {
         quiz_container.addView(button)
     }
 
-    private fun evaluateQuiz(){}
+    private fun evaluateQuiz(){
+        var score = 0
+
+        questions.forEach{q ->
+            when(q.type){
+                QuestionType.Text -> {
+                    val editText = quiz_container.findViewById<EditText>(q.id)
+
+                    editText?.let {
+                        val userAnswer = it.text.toString().toLowerCase(Locale.getDefault())
+                        if(userAnswer == q.answers[0]){
+                            score++
+                        }
+                    }
+                }
+                QuestionType.Radio -> {
+                    val radioGroup = quiz_container.findViewById<RadioGroup>(q.id)
+
+                    radioGroup?.let{
+                        val checkedId = it.checkedRadioButtonId
+                        if(checkedId > 0){
+                            val radioButton = quiz_container.findViewById<RadioButton>(checkedId)
+                            val userAnswer = radioButton.text
+                            if(userAnswer == q.answers[0]){
+                                score++
+                            }
+                        }
+                    }
+                }
+                QuestionType.Checkbox -> {
+                    var correct = true
+
+                    q.options?.forEachIndexed{index, element ->
+                        val checkedId = (q.id.toString() + index.toString()).toInt()
+                        val checkbox = quiz_container.findViewById<CheckBox>(checkedId)
+                        if(q.answers.contains(checkbox.text)){
+                            if(!checkbox.isChecked){
+                                correct = false
+                            }
+                        }
+                        else{
+                            if(checkbox.isChecked){
+                                correct = false
+                            }
+                        }
+                    }
+                    if(correct) score++
+                }
+            }
+        }
+        Toast.makeText(this,"You scored $score out of ${questions.size}",Toast.LENGTH_SHORT).show()
+    }
 
 }
