@@ -1,7 +1,16 @@
 package com.example.layoutbasics
 
+import android.content.res.Resources
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.LinearLayout
+import android.widget.TextView
+
+const val margin: Int = 16
+
+//extension property to convert dp into pixel
+val Int.pixel: Int
+    get() = (this * Resources.getSystem().displayMetrics.density).toInt()
 
 class MainActivity : AppCompatActivity() {
     private var questions: MutableList<Question> = mutableListOf()
@@ -42,7 +51,24 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupTextQuestion(counter: Int, q: Question){}
+
     private fun setupRadioQuestion(counter: Int, q:Question){}
     private fun setupCheckBoxQuestion(counter: Int, q:Question){}
+
+
+    private fun getQuestionTextView(counter: Int, question: String): TextView{
+        val textView = TextView(this)
+        textView.text = getString(R.string.question, counter, question)
+
+        textView.layoutParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        ).apply { topMargin = margin.pixel}
+
+        return textView
+    }
+
+
+
 
 }
