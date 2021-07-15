@@ -3,6 +3,7 @@ package com.example.layoutbasics
 import android.content.res.Resources
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Gravity
 import android.widget.*
 import kotlinx.android.synthetic.main.dynamic_layout.*
 
@@ -23,7 +24,7 @@ class MainActivity : AppCompatActivity() {
 
         setupQuestions()
         setupQuiz()
-
+        setupSubmitButton()
     }
 
     private fun setupQuestions(){
@@ -117,7 +118,23 @@ class MainActivity : AppCompatActivity() {
         return textView
     }
 
+    private fun setupSubmitButton(){
+        val params = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        )
+        params.topMargin = margin.pixel
+        params.gravity = Gravity.CENTER_HORIZONTAL
 
+        val button = Button(this)
+        button.layoutParams = params
+        button.text = "Submit"
+        button.setOnClickListener{
+            evaluateQuiz()
+        }
+        quiz_container.addView(button)
+    }
 
+    private fun evaluateQuiz(){}
 
 }
