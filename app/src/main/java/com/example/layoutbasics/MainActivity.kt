@@ -58,8 +58,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun getQuestionTextView(counter: Int, question: String): TextView{
         val textView = TextView(this)
-        textView.text = getString(R.string.question, counter, question)
+        textView.text = "Q{counter}. {question}"
 
+        // For the TextView we are setting these layout parameters
         textView.layoutParams = LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.MATCH_PARENT,
             LinearLayout.LayoutParams.WRAP_CONTENT
