@@ -13,6 +13,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.dynamic_layout)
 
         setupQuestions()
+        setupQuiz()
 
     }
 
@@ -23,5 +24,25 @@ class MainActivity : AppCompatActivity() {
         questions.add(Question(3, QuestionType.Checkbox, "Which of these are state capitals?",
             listOf("Guwahati","Chennai","Vanarasi","Dispur"), listOf("Chennai","Dispur")))
     }
+
+    private fun setupQuiz(){
+        questions.forEachIndexed{ index, element ->
+            when(element.type){
+                QuestionType.Text ->{
+                    setupTextQuestion(index, element)
+                }
+                QuestionType.Radio ->{
+                    setupRadioQuestion(index, element)
+                }
+                QuestionType.Checkbox ->{
+                    setupCheckBoxQuestion(index, element)
+                }
+            }
+        }
+    }
+
+    private fun setupTextQuestion(counter: Int, q: Question){}
+    private fun setupRadioQuestion(counter: Int, q:Question){}
+    private fun setupCheckBoxQuestion(counter: Int, q:Question){}
 
 }
