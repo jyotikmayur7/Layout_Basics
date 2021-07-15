@@ -86,7 +86,23 @@ class MainActivity : AppCompatActivity() {
         quiz_container.addView(radioGroup)
     }
 
-    private fun setupCheckBoxQuestion(counter: Int, q:Question){}
+    private fun setupCheckBoxQuestion(counter: Int, q:Question){
+        val textView = getQuestionTextView(counter, q.qText)
+        quiz_container.addView(textView)
+
+        val params = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        )
+
+        q.options?.forEachIndexed{index, element ->
+            val checkBox = CheckBox(this)
+            checkBox.text = element
+            checkBox.id = (q.id.toString() + index.toString()).toInt()
+            checkBox.layoutParams = params
+            quiz_container.addView(checkBox)
+        }
+    }
 
     private fun getQuestionTextView(counter: Int, question: String): TextView{
         val textView = TextView(this)
